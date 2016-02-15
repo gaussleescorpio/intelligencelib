@@ -1,2 +1,1 @@
-# intelligencelib
-# intelligencelib
+This library will be used as a quatitative analysis investment tool for any purposes. It will contain commonly used machine learning libraries which run very fast and is well-organized. It will also contain a lot of private models used for making money. 
