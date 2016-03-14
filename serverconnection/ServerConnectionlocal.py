@@ -4,9 +4,18 @@ Author: Gauss Lee
 Date : 2016-03-01
 
 Module description:
-Users can use this module to connect to bisam-client01 server by initilizing 
+Users can use this module to connect to bisam-client01 server by initilizing the data retrival process. Base virutal class
+, derived data retrival class and implementation examples are all given below.
 
+Some heads-up for using this module:
+1. for retrieving all of the data, you should use function read_data_by_selection.
+2. for retrieving data with known indexes, you should use function read_data_by_selection_index. The index can be sql datatime, such as
+   a string "2013-01-01" or a int index which is used to quote different rows in the sql database.
+3. for getting heads and tails of the data from a particular table. You can use Read_data_head or Read_data_tails. Please note that these two functions
+    might be slow if you want to retieve a lot of data.
+4. For any more complicated mysql commands, you can use get_data_with_commands for general purposes.
 
+In the next version, it will be updated to use ibis and impala.
 """
 
 import MySQLdb as mdb
