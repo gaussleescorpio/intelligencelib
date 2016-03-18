@@ -155,6 +155,7 @@ class  Mysql_Functions(Virtual_Mysql_Functions):
         :param tb_name:denotes which table it is
         :param start_index: str means datetime "2014-02-01" or int means index
         :param end_index: str means datetime "2014-02-01" or int means index
+        :param index_name: specify the index name in the table
         :return:
         """
         assert isinstance(index_name, basestring), "please input a valid index name"
@@ -197,7 +198,7 @@ class  Mysql_Functions(Virtual_Mysql_Functions):
         """
         Do not assign very big num with huge tables to this function, it will be slow
         :param con:  a string composed of all the retrieving attrs or cols, ex: "attr1, attr2"
-        :param num: num of head elements you want to get
+        :param num: num of tail elements you want to get
         :param tb_name:
         :return:
         """
@@ -206,6 +207,11 @@ class  Mysql_Functions(Virtual_Mysql_Functions):
         return dict_rec.tail(num)
 
     def Get_data_with_commands(self, command=""):
+        """
+        Generic sql command exec function
+        :param command: any sql command
+        :return: with error handling control
+        """
         assert isinstance(command, basestring), "please input sql commands as string type"
         rec = -1
         try:
