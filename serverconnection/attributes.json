@@ -1,0 +1,337 @@
+{
+  "ibemining": {
+    "alias": {
+      "da": "d_air_booking",
+      "db": "d_bookings",
+      "doadd": "d_order_add_on_purchases",
+      "dor": "d_order_items",
+      "dore": "d_order_revenue_items",
+      "dors": "d_orders",
+      "destcntry": "r_countries",
+      "origcntry": "r_countries"
+    },
+    "d_air_booking": {
+      "tb_alias": "da",
+      "Validating_Carrier_ID": "ValidatingCarrier",
+      "Unbooked_Or_Booked_Info_ID": "BookExistID",
+      "System_ID": "FirstAirSystem",
+      "Order_ID": "OrderID",
+      "Site_ID": "SiteID",
+      "Site_Country_ID": "SiteCountryID",
+      "Order_Created": "OrderTime",
+      "Departure_Time_First_Segment": "DepartureTimeFL",
+      "Arrival_Time_Last_Segment": "ArrivalTimeLS",
+      "Origin_Airport_ID": "OriginAirportID",
+      "Origin_Iata_Region_ID": "OriginIataID",
+      "Origin_City_ID": "OriginCityID",
+      "Origin_Country_ID": "OriginCountryID",
+      "Destination_Iata_Region_ID": "DestIataID",
+      "Destination_City_ID": "DestCityID",
+      "Destination_Country_ID": "DestCoutID",
+      "Journey_Type_ID": "JouneyType",
+      "Std_Tkt_Office_Id_ID": "TktOfficeID",
+      "Std_Tkt_Office_Id_Country_ID": "TktOfficeCountID",
+      "Actual_Tkt_Office_Id_ID": "ActTktOfficeID",
+      "Actual_Tkt_Office_Id_Country_ID": "ActTktOfficeCountID",
+      "Validating_Carrier_ID": "ValidatingCarrier",
+      "Majority_marketing_Carrier_ID": "MajMarktCarrier",
+      "Only_marketing_Carrier_ID": "OnlyMarktCarrier",
+      "Majority_Operating_Carrier_ID": "MajOpCarrier",
+      "Only_Operating_Carrier_ID": "OnlyOpCarrier",
+      "Num_Segments": "NumSegs",
+      "Num_Bounds": "NumBounds",
+      "Bound_2_Start_Segment_1_Based": "Bound2StartSeg1Bs",
+      "Is_Pack_Price": "IsPackPrice",
+      "Is_Nego_Price": "IsNegoPrice",
+      "Is_One_Way_Combination": "IsOneWayComb",
+      "Num_Search_Adults": "NumofAds",
+      "Num_Search_Children": "NumofCh",
+      "Num_Search_Infants": "Numofinf",
+      "Net_Tax_Vat": "NetTaxVat",
+      "Net": "Net",
+      "Tax_Excl_Vat": "TaxExVat",
+      "Vat": "Vat",
+      "Fuel_Surcharges": "FuleCharge",
+      "Optimization_Amount": "OptAmount",
+      "Markup": "Markup",
+      "Markup_Segment_ID": "MarkupSeg"
+    },
+    "d_bookings": {
+      "tb_alias": "db",
+      "Provider_Item_PCA_ID": "ProviderItemID",
+      "Provider_Booking_ID": "PBookingID",
+      "Order_ID": "OrderID",
+      "Site_ID": "SiteID",
+      "Site_Country_ID": "SiteCountryID",
+      "Order_Created": "OrderTime",
+      "System_ID": "FirstAirSystem",
+      "Booking_Type_ID": "BookType",
+      "First_Day_Of_Service": "FirstDayServ",
+      "Last_Day_Of_Service": "LastDayServ",
+      "Destination_City_ID": "DestCityID",
+      "Origin_City_ID": "OriginCityID",
+      "Markup_Segment_ID": "MarkupSeg"
+    },
+    "d_order_add_on_purchases": {
+      "tb_alias": "doadd",
+      "ID": "ID",
+      "Order_ID": "OrderID",
+      "Add_On_Order_Number": "AddOnOrderNum",
+      "Site_ID": "SiteID",
+      "Site_Country_ID": "SiteCountryID",
+      "Created": "OrderTime",
+      "Currency_ID": "CurrencyID",
+      "Order_Add_on_Amount": "OrderAddonAmount",
+      "Primary_Order_Amount": "PriOrderAmount",
+      "Order_Amount": "OrderAmount",
+      "Server_Host": "ServerHost",
+      "User_Agent_ID": "UserAgentID",
+      "User_Interface_Type_ID": "UserInterfaceType",
+      "Payment_System_ID": "PaymentSysID",
+      "Payment_Type_ID": "PaymentType",
+      "Payment_Subtype": "PaymentSubType",
+      "Is_Moto": "IsMoto",
+      "User_ID": "UserID",
+      "Commission_User_ID": "CommisionUserID"
+    },
+    "d_order_items": {
+      "tb_alias": "dor",
+      "ID": "ID",
+      "Order_ID": "OrderID",
+      "Order_Change_ID": "OrderChangeID",
+      "Site_ID": "SiteID",
+      "Site_Country_ID": "SiteCountryID",
+      "Order_Created": "OrderTime",
+      "Product_Type_ID": "ProductTypeID",
+      "Currency_ID": "CurrencyID",
+      "Amount": "Amount",
+      "Markup_Amount": "MarkupAmount",
+      "Non_Bank_Payment_Addition_Part_Of_Markup": "NonBankAddMarkup",
+      "Travel_Result_Position": "TravelResultPos",
+      "Combined_Customer_Item_ID": "CombinedCustomerItemID",
+      "Customer_Item_ID": "CustomerItemID",
+      "Product_Item_ID": "ProductItemID",
+      "Provider_Item_PCA_ID": "ProviderItemID",
+      "Provider_Booking_ID": "PBookingID"
+    },
+    "d_order_revenue_items": {
+      "tb_alias": "dore",
+      "Order_ID": "OrderID",
+      "Site_ID": "SiteID",
+      "Site_Country_ID": "SiteCountryID",
+      "Order_Created": "OrderTime",
+      "Product_Type_ID": "ProductTypeID",
+      "Revenue": "Revenue"
+    },
+    "d_orders": {
+      "tb_alias": "dors",
+      "ID": "OrderID",
+      "Order_Number": "OrderNum",
+      "Site_ID": "SiteID",
+      "Site_Country_ID": "SiteCountryID",
+      "Created": "OrderTime",
+      "Currency_ID": "CurrencyID",
+      "Order_Amount": "OrderAmount",
+      "Primary_Order_Amount": "PriOrderAmount",
+      "Revenue": "Revenue",
+      "Marketing_Cost": "MarketCost",
+      "Marketing_Cost_Type_ID": "MarketCostID",
+      "Session_Tracking_Entry_ID": "SessionTrackingEntryID",
+      "Config_Set_ID": "ConfigSetID",
+      "Server_Host": "ServerHost",
+      "User_Agent_ID": "UserAgentID",
+      "User_Interface_Type_ID": "UserInterfaceType",
+      "Payment_System_ID": "PaymentSysID",
+      "Payment_Type_ID": "PaymentType",
+      "Payment_Subtype": "PaymentSubType",
+      "Is_Changed": "IsChanged",
+      "Is_Canceled": "IsCanceled",
+      "Is_Test_Order": "IsTestOrder"
+    },
+    "r_countries": {
+      "tb_alias": "destcntry,origcntry",
+      "id": "id"
+    }
+  },
+  "ibe": {
+    "alias": {
+      "currconv": "currency_conversion"
+    },
+    "currency_conversion": {
+      "tb_alias": "currconv",
+      "curr_id_to": "CurrencyID"
+    }
+  },
+
+  "Derived_data": {
+    "TravelDays": {
+      "op": "datediff",
+      "tables": [
+        "da"
+      ],
+      "param": [
+        "da.Arrival_Time_Last_Segment",
+        "da.Departure_Time_First_Segment"
+      ]
+    },
+    "DaysAhead": {
+      "op": "datediff",
+      "tables": [
+        "da"
+      ],
+      "param": [
+        "da.Departure_Time_First_Segment",
+        "da.Order_Created"
+      ]
+    },
+    "IsInterCont": {
+      "op": "if",
+      "tables": [
+        "destcntry",
+        "origcntry"
+      ],
+      "param": [
+        "destcntry.Continent_ID != origcntry.Continent_ID",
+        1,
+        0
+      ]
+    },
+    "ValidatingCarrier": {
+      "op": "if",
+      "tables": [
+        "da"
+      ],
+      "param": [
+        "da.Validating_Carrier_ID is not null",
+        "da.Validating_Carrier_ID",
+        -1
+      ]
+    },
+    "MajMarktCarrier": {
+      "op": "if",
+      "tables": [
+        "da"
+      ],
+      "param": [
+        "da.Majority_marketing_Carrier_ID is not null",
+        " da.Majority_marketing_Carrier_ID",
+        -1
+      ]
+    },
+    "MajOpCarrier": {
+      "op": "if",
+      "tables": [
+        "da"
+      ],
+      "param": [
+        "da.Majority_Operating_Carrier_ID is not null",
+        "da.Majority_Operating_Carrier_ID",
+        -1
+      ]
+    },
+    "OnlyMarktCarrier": {
+      "op": "if",
+      "tables": [
+        "da"
+      ],
+      "param": [
+        "da.Only_marketing_Carrier_ID is not null",
+        "da.Only_marketing_Carrier_ID",
+        -1
+      ]
+    },
+    "OnlyOpCarrier": {
+      "op": "if",
+      "tables": [
+        "da"
+      ],
+      "param": [
+        "da.Only_Operating_Carrier_ID is not null",
+        "da.Only_Operating_Carrier_ID",
+        -1
+      ]
+    },
+    "ServDays": {
+      "op": "datediff",
+      "tables": [
+        "db"
+      ],
+      "param": [
+        "db.Last_Day_Of_Service",
+        "db.First_Day_Of_Service"
+      ]
+    },
+    "RevenueSek": {
+      "op": "comb",
+      "tables": [
+        "dors",
+        "currconv"
+      ],
+      "param": [
+        "dors.Marketing_Cost*(1/currconv.exchange_rate)"
+      ]
+    },
+    "MarketCostSek": {
+      "op": "comb",
+      "tables": [
+        "dors",
+        "currconv"
+      ],
+      "param": [
+        "dors.Marketing_Cost*(1/currconv.exchange_rate)"
+      ]
+    },
+    "Tb1": {
+      "op": "comb",
+      "tables": [
+        "dors",
+        "currconv"
+      ],
+      "param": [
+        "(dors.Revenue - dors.Marketing_Cost)* (1/currconv.exchange_rate)"
+      ]
+    }
+  },
+  "functions": {
+    "datediff": "datadiff(%s, %s)",
+    "dayofweek": "dayofweek(%s)",
+    "if": "if(%s, %s, %s)",
+    "comb": "%s"
+  },
+  "join_info": {
+    "ibemining": {
+      "db": {
+        "Order_Created": "da.Order_Created",
+        "Order_ID": "da.Order_ID"
+      },
+      "dor": {
+        "Order_Created": "da.Order_Created",
+        "Order_ID": "da.Order_ID",
+        "Provider_Item_PCA_ID": "da.Provider_Item_PCA_ID"
+      },
+      "dors": {
+        "Created": "da.Order_Created"
+      },
+      "doadd": {
+        "Created": "da.Order_Created",
+        "Order_ID": "da.Order_ID"
+      },
+      "dore": {
+        "Order_Created": "da.Order_Created",
+        "Order_ID": "da.Order_ID"
+      },
+      "destcntry": {
+        "id": "da.Destination_Country_ID"
+      },
+      "origcntry":{
+        "id":"da.Origin_Country_ID"
+      }
+    },
+    "ibe": {
+      "currconv": {"curr_id_to":"dors.Currency_ID"}
+    }
+  },
+
+  "filter":{"time": "da.Order_Created between '%s' and '%s'"}
+
+}
