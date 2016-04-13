@@ -1,6 +1,6 @@
 
 
-import ServerConnectionlocal
+import ServerConnectionlocal1
 
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QCheckBox, QVBoxLayout,QHBoxLayout
