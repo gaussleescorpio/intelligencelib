@@ -3,6 +3,7 @@ import pandas as pd
 import sys
 import time
 import json
+import operator
 
 
 
@@ -44,11 +45,15 @@ class AdvanceDataFetcher(IbeFetcher):
     def __select_attr_append(self, func_in = "da.Site_ID"):
         attr_exist = False
         table_name = None
-        for tb in self.__attr_list["ibemining"].keys():
-            if func_in.split(".")[1] in self.__attr_list["ibemining"][tb]:
-                table_name = tb
-                attr_exist = True
-                break
+        tb = func_in.split(".")[0]
+        if tb in self.__attr_list["ibemining"]["alias"].keys():
+            table_name = self.__attr_list["ibemining"]["alias"][ tb ]
+            attr_exist = True
+        # for tb in self.__attr_list["ibemining"].keys():
+        #     if func_in.split(".")[1] in self.__attr_list["ibemining"][tb]:
+        #         table_name = tb
+        #         attr_exist = True
+        #         break
 
         if attr_exist:
             if table_name in self.__table_track.keys():
@@ -189,7 +194,7 @@ class AdvanceDataFetcher(IbeFetcher):
                         # print on_symbol
                         # print wrapper
                         # print "......."*10
-                        # wrapper += on_symbol%tuple(cond)+"\n"
+                        wrapper += on_symbol%tuple(cond)+"\n"
                 # judge if the table name is in db ibe
                 if tb_name in self.__attr_list["ibe"].keys():
                     # get the alias name of the table, if there are two alias use a loop
@@ -198,12 +203,81 @@ class AdvanceDataFetcher(IbeFetcher):
                                  + " on "
                         on_symbol = "%s and "*len( self.__attr_list["join_info"]["ibe"][alia_name] )
                         on_symbol = on_symbol[0:-5]
+                        cond = []
                         for j_tb_name in self.__attr_list["join_info"]["ibe"][alia_name].keys():
-                            cond = []
                             cond.append(alia_name+"."+j_tb_name+"="+self.__attr_list["join_info"]["ibe"][alia_name][j_tb_name])
                         wrapper += on_symbol%tuple(cond)+"\n"
 
                 self.__inner_join_wrapper.append(wrapper)
+
+    def __join_tables_custom(self):
+        import numpy as np
+        if len(self.__table_track) <= 1:
+            for tb_name in self.__table_track.keys():
+                if tb_name in self.__attr_list["ibemining"].keys():
+                    wrapper = "from ibemining.%s as %s \n"%( tb_name,  self.__attr_list["ibemining"][tb_name]["tb_alias"] )
+                if tb_name in self.__attr_list["ibe"].keys():
+                    wrapper = "from ibemining.%s as %s \n"%( tb_name,  self.__attr_list["ibe"][tb_name]["tb_alias"] )
+            self.__inner_join_wrapper.append(wrapper)
+            return
+
+        if len(self.__table_track) >= 2:
+            sel_feature = {}
+            main_tb_name = max(self.__table_track.iteritems(), key=operator.itemgetter(1))[0]
+            # turn the whole feature list into a dict you can search with keys
+            for sel in self.__sel_features:
+                tb_alia = sel.split(".")[0]
+                feature = sel.split(".")[1]
+                if tb_alia in self.__attr_list["ibemining"]["alias"].keys():
+                    tb = self.__attr_list["ibemining"]["alias"][tb_alia]
+                    if not sel_feature.has_key(tb):
+                        sel_feature[tb] = np.asarray( [feature, self.__attr_list["ibemining"][tb][feature] ] )
+                    else:
+                        sel_feature[tb] = np.concatenate(( sel_feature[tb]\
+                                                               ,np.asarray( [feature, self.__attr_list["ibemining"][tb][feature] ] ) ), axis=0)
+
+                if tb_alia in self.__attr_list["ibe"]["alias"].keys():
+                    tb = self.__attr_list["ibe"]["alias"][tb_alia]
+                    if not sel_feature.has_key(tb):
+                        sel_feature[tb] = np.asarray( [feature, self.__attr_list["ibe"][tb][feature] ] )
+                    else:
+                        sel_feature[tb].append(np.asarray( [feature, self.__attr_list["ibe"][tb][feature] ] ))
+
+            if main_tb_name in self.__attr_list["ibemining"].keys():
+                wrapper = "from ibemining.%s as %s \n"%( main_tb_name,  self.__attr_list["ibemining"][main_tb_name]["tb_alias"] )
+            if main_tb_name in self.__attr_list["ibe"].keys():
+                wrapper = "from ibemining.%s as %s \n"%( main_tb_name,  self.__attr_list["ibe"][main_tb_name]["tb_alias"] )
+
+            for tb_nm in self.__table_track.keys():
+                base_tb = main_tb_name
+                if tb_nm == main_tb_name:
+                    continue
+                set_a = sel_feature[main_tb_name][:,1]
+                set_b = sel_feature[tb_nm][:,1]
+                set_c = set(set_a) & set(set_b)
+                tmp = sel_feature.pop(main_tb_name)
+                if list(set_c):
+
+                    # go to check with the other tables
+                    for search_tb in sel_feature.keys():
+                        set_a = sel_feature[search_tb]
+                        set_c = set(set_a) & set(set_b)
+                        if set_c:
+                            base_tb = search_tb
+                            break
+                else:
+                    sel_feature[main_tb_name] = tmp
+                    break
+                # add joins to wrapper
+
+
+                sel_feature.pop(tb_nm)
+
+
+
+
+
+
 
 
     def __filter(self, name = "time"):
