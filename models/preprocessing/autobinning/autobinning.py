@@ -16,6 +16,7 @@ from scipy import stats
 from matplotlib import pylab as plt
 import category_encoders as ce
 from datetime import datetime
+import  sys
 
 # silience the chained-assignment warning
 pd.set_option('chained_assignment',None)
@@ -41,10 +42,12 @@ class BinEncoder():
         """
         return data.value_counts()
 
+
+
     def order_map(self, data=pd.Series()):
         """
-        Map the original random ID to the ordering ID based on frequency
-        :return: mapped data marked by ordering numbers
+        Map the original random ID to the order position based on frequency
+        :return: mapped data marked by order numbers
         """
         posns_in_order = data.copy()
         occurrence_sorted = self.count_occurrences(posns_in_order)
@@ -72,6 +75,8 @@ class BinEncoder():
         :param n: n times log taken
         :return: transformed data
         """
+        # transform to numeric input, especially for string input
+        X = pd.to_numeric(X)
         transformed_X = np.log(X)
         # print "%.2f th data result is %s" %(n, str(data))
         if n <= 1.00:
@@ -82,9 +87,9 @@ class BinEncoder():
 
     def bin_map(self, p):
         """
-        Map the ordering ID to bin ID
+        Map the order ID to bin ID
         :param p: an array which contains value scope for each bin
-        :param transformed_id: transformed ordering ID
+        :param transformed_id: transformed order ID
         :return:
         """
         a = 0
@@ -103,10 +108,14 @@ class BinEncoder():
 
 
     def fit(self, X=pd.Series(),show_diag=True):
-        """
-        Automatic binning process, the result is put in the self.data
+        """Automatic binning process, the result is put in the self.data
+
+
+
         :param show_diag: True for showing the binning histogram
+        :param levels: Optional iterable of available levels
         :return:
+
         """
 
         mapped_data = self.order_map(X)
@@ -128,25 +137,24 @@ class BinEncoder():
         """
         if self.actual_bin_num == 0:
             raise Exception("You have not fitted your model yet...")
-        # directly map the id to bin_id with trained map
-        copy_X = X.copy()
-        # t1 = datetime.now()
-        for key in self.map_rec.keys():
-            index_rows = copy_X == key
-            X[index_rows] = self.map_rec[key]
-        # t2 = datetime.now()
-        # print t2-t1
 
-        diff = set(X.values) - set(self.map_rec.values)
+        # Directly map the id to bin_id with trained map
+        copy_X = X.copy()
+
+        for key in self.map_rec.keys():
+            index_rows = X == key
+            copy_X[index_rows] = self.map_rec[key]
+
+        diff = set(copy_X.values) - set(self.map_rec.values)
         if not diff:
             pass
         else:
-            print "warning: there are new alien data sent in, please fit with the new data:%s" %str(diff)
+            sys.stderr.write( "warning: there are new alien data sent in, please fit with the new data:%s" %str(diff) )
             for p in list(diff):
-                row_index = copy_X==p
-                X[row_index] = self.actual_bin_num + 1
+                row_index = X==p
+                copy_X[row_index] = self.actual_bin_num
 
-        return X
+        return copy_X
 
 
 
@@ -175,3 +183,9 @@ if __name__ == "__main__":
     alien_data = pd.Series([-9999, 39, -19])
     alien_data = binning.transform(alien_data)
     print alien_data
+
+    # testing for fitting strings
+    string_bin = BinEncoder(max_bins=4)
+    string_bin.fit(pd.Series(["a","a","a","c","c"]))
+    string_bin.transform(pd.Series(["a","d"]))
+
