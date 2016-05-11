@@ -110,7 +110,6 @@ trans_t = enc.transform(t)
 trans_t = trans_t.toarray()
 
 
-
 # binary coding
 
 
@@ -332,5 +331,46 @@ print "actual_neg" + " "*2 + str(1-DummyP - corrn/i) + " "*3 + str(corrn/i)
 print('Variance score: %.2f' % svr_rbf.score(testing_data, testing_target))
 print "Mean Square Error: %.4f" %  np.sqrt ( sum( ( svr_rbf.predict(testing_data)- testing_target )**2 ) / len(testing_target) )
 plt.plot(svr_rbf.predict(testing_data)-testing_target, '*', color='blue',linewidth=3)
+plt.show()
+
+
+####### testing model fro RandomForestRegression #############################
+from sklearn.ensemble import RandomForestRegressor
+
+RF = RandomForestRegressor(n_estimators=22, verbose=1, n_jobs=-1)
+RF.fit(X,y)
+
+
+i = 0.0
+corr = 0.0
+corrp = 0.0
+corrn = 0.0
+for u in RF.predict(testing_data):
+#     if abs(u - testing_target[i]) > 20:
+#         print "predicted value is: %f" %u
+#         print "%s th target is:" %str(i)
+#         print data.values[num+i]
+    if (u > 0 and testing_target[i]>0) or (u <=0 and testing_target[i]<=0):
+        #print u, testing_target[i]
+        corr += 1.0
+        if (u > 0 and testing_target[i]>0):
+            # print "positive prediction: %.2f, %.2f" % (u, testing_target[i])
+            corrp +=1.0
+        if (u <=0 and testing_target[i]<=0):
+            # print "zero prediction %.2f, %.2f" % (u, testing_target[i])
+            corrn += 1.0
+    else:
+        pass
+        #print u, testing_target[i]
+    i += 1.0
+
+lasso_lar_a = corr / i
+print "RF regression correction rate:" + str(lasso_lar_a)
+print " "*12 + "predicted_pos" + " "*4 + "predicted_neg"
+print "actual_pos" + " "*2 + str(corrp/i) + " "*3 + str(DummyP-corrp/i)
+print "actual_neg" + " "*2 + str(1-DummyP - corrn/i) + " "*3 + str(corrn/i)
+print('Variance score: %.2f' % RF.score(testing_data, testing_target))
+print "Root Mean Square Error: %.4f" %  np.sqrt ( sum( ( RF.predict(testing_data)- testing_target )**2 ) / len(testing_target) )
+plt.plot(RF.predict(testing_data)-testing_target, '*', color='blue',linewidth=3)
 plt.show()
 
